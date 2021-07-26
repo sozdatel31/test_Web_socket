@@ -1,6 +1,5 @@
 import React, {useState} from 'react';
-
-import '../App.css';
+import './App.css';
 import {ShellSort} from "../sortShell";
 import PingerPonger from "./pingerPonger";
 
@@ -19,7 +18,7 @@ type TargetType = {
     deviation: number | undefined
 }
 
-function AppSS() {
+function App() {
     const [target, setTarget] = useState<TargetType>({
         mode: 0,
         avarege: 0,
@@ -28,7 +27,7 @@ function AppSS() {
     })
     const [openStat, setOpenStat] = useState(false)
     const [modeObj, setModeObj] = useState({
-        count: {} as { [k: string]: number },
+        count: {} as { [key: string]: number },
         max: -1,
         mode: null as null | number
     })
@@ -43,7 +42,6 @@ function AppSS() {
         setModeObj({...modeObj})
     }
 //-----------------------------------------------
-
     const [avaregeAndDeviation, setAvaregeAndDeviation] = useState({
         total: 0, meanVal: 0,
         count: 0, SDprep: 0, SDresult: undefined as undefined | number,
@@ -54,9 +52,8 @@ function AppSS() {
         avaregeAndDeviation.meanVal = avaregeAndDeviation.total / avaregeAndDeviation.count;
         avaregeAndDeviation.SDprep += Math.pow((data - avaregeAndDeviation.meanVal), 2);
         avaregeAndDeviation.SDresult = Math.sqrt((avaregeAndDeviation.SDprep / (avaregeAndDeviation.count)));
-
+        setAvaregeAndDeviation({...avaregeAndDeviation})
     }
-
 //------------------------------------------------
 // Не смог оптимизировать расчёт медианы
     // function findMedianAndMode(data: Array<dataMessage>) {
@@ -72,7 +69,6 @@ function AppSS() {
     //         return (m[middle] + m[middle + 1]) / 2.0;
     //     }
     // }
-
     function statOpen() {
         setOpenStat(true)
         setTarget({
@@ -81,9 +77,7 @@ function AppSS() {
             avarege: avaregeAndDeviation.meanVal,
             deviation: avaregeAndDeviation.SDresult
         })
-
     }
-
 //------------------------------------------------
     function openWaterfall() {
         socket = new WebSocket("wss://trade.trademux.net:8800/?password=1234")
@@ -98,14 +92,11 @@ function AppSS() {
     function closeWaterfall() {
         socket.close()
     }
-
 //------------------------------------------------
-
-
     return (
         <div className="App">
             <button className="but" onClick={openWaterfall}>Старт</button>
-            <button className="but" onClick={() => statOpen()}>Статистика</button>
+            <button disabled={!modeObj.mode} className="but" onClick={() => statOpen()}>Статистика</button>
             {openStat ? <div>
                 <div> Среднее: {target.avarege}  </div>
                 <div> Стандартное отклонение: {target.deviation}  </div>
@@ -118,4 +109,4 @@ function AppSS() {
     );
 }
 
-export default AppSS;
+export default App;

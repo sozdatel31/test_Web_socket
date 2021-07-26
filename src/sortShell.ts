@@ -1,4 +1,4 @@
-import {dataMessage} from "./App";
+import {dataMessage} from "./workFolder/App";
 
 
 export let ShellSort = (arr: Array<dataMessage>) => {

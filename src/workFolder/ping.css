@@ -1,0 +1,19 @@
+.pinger {
+    margin-top: 50vh;
+    text-align: center;
+}
+
+.input {
+    color: black;
+    border: 1px solid black;
+    background-color: white;
+  }
+  
+  .input:hover {
+    background-color: gray;
+  }
+  
+  .input:active {
+    background-color: yellow;
+  }
+  
